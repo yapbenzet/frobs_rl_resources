@@ -16,6 +16,9 @@ from frobs_rl.wrappers.NormalizeObservWrapper import NormalizeObservWrapper
 # Models
 from frobs_rl.models.td3 import TD3
 from frobs_rl.models.sac import SAC
+from frobs_rl.models.ddpg import DDPG
+from frobs_rl.models.ppo import PPO
+from frobs_rl.models.dqn import DQN
 
 if __name__ == '__main__':
 
@@ -23,16 +26,16 @@ if __name__ == '__main__':
     ros_node.ros_kill_all_processes()
 
     # Launch Gazebo 
-    ros_gazebo.launch_Gazebo(paused=True, gui=True)
+    ros_gazebo.launch_Gazebo(paused=True, gui=False)
 
     # Start node
     rospy.logwarn("Start")
     rospy.init_node('kobuki_maze_train')
 
     # Launch the task environment
-    # env = gym.make('KobukiEmptyEnv-v0')
+    env = gym.make('KobukiEmptyEnv-v0')
     # env = gym.make('KobukiDynamicEnv-v3')
-    env = gym.make('KobukiMazeEnv-v0')
+    #env = gym.make('KobukiMazeEnv-v0')
 
     #--- Normalize action space
     env = NormalizeActionWrapper(env)
@@ -50,16 +53,25 @@ if __name__ == '__main__':
 
     
     #-- TD3
-    save_path = pkg_path + "/models/maze/td3/"
-    log_path = pkg_path + "/logs/maze/td3/"
-    model = TD3(env, save_path, log_path, config_file_pkg="kobuki_maze_rl", config_filename="td3.yaml")
+    #save_path = pkg_path + "/models/maze/td3/"
+    #log_path = pkg_path + "/logs/maze/td3/"
+    #model = TD3(env, save_path, log_path, config_file_pkg="kobuki_maze_rl", config_filename="td3.yaml")
 
     #-- SAC
     # save_path = pkg_path + "/models/dynamic/sac/"
     # log_path = pkg_path + "/logs/dynamic/sac/"
     # model = SAC(env, save_path, log_path, config_file_pkg="kobuki_maze_rl", config_filename="sac.yaml")
-
-
+    
+    #-- PPO
+    #save_path = pkg_path + "/models/empty/ppo/"
+    #log_path = pkg_path + "/logs/empty/ppo/"
+    #model = PPO(env, save_path, log_path, config_file_pkg="kobuki_maze_rl", config_filename="ppo.yaml")
+    
+    #-- DDPG
+    save_path = pkg_path + "/models/empty/ddpg/"
+    log_path = pkg_path + "/logs/empty/ddpg/"
+    model = DDPG(env, save_path, log_path, config_file_pkg="kobuki_maze_rl", config_filename="ddpg.yaml")
+    
     model.train()
     model.save_model()
     model.close_env()

@@ -60,7 +60,8 @@ if __name__ == '__main__':
     episodes = 10
     epi_count = 0
     while epi_count < episodes:
-        action, _states = model.predict(obs, deterministic=True)
+        action, _states = model.predict(obs,deterministic=True)
+        #action = env.action_space.sample()
         obs, _, dones, info = env.step(action)
         if dones:
             epi_count += 1
