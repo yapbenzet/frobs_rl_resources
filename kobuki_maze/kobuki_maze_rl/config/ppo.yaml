@@ -10,11 +10,11 @@ model_params:
   save_replay_buffer: False # PPO does not support saving replay buffer
 
   # Load model params
-  load_model: False
-  model_name: trained_model_01_10_2021_15_30_30
+  load_model: True
+  model_name: ppo_model_200000_steps
 
   # Logging parameters
-  log_folder: PPO_1
+  log_folder: PPO_2
   log_interval: 1 # The number of episodes between logs
   reset_num_timesteps: False # If true, will reset the number of timesteps to 0 every training 
 

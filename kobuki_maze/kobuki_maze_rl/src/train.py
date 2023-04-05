@@ -33,9 +33,9 @@ if __name__ == '__main__':
     rospy.init_node('kobuki_maze_train')
 
     # Launch the task environment
-    env = gym.make('KobukiEmptyEnv-v0')
+    #env = gym.make('KobukiEmptyEnv-v0')
     # env = gym.make('KobukiDynamicEnv-v3')
-    #env = gym.make('KobukiMazeEnv-v0')
+    env = gym.make('KobukiMazeEnv-v0')
 
     #--- Normalize action space
     env = NormalizeActionWrapper(env)
@@ -63,14 +63,14 @@ if __name__ == '__main__':
     # model = SAC(env, save_path, log_path, config_file_pkg="kobuki_maze_rl", config_filename="sac.yaml")
     
     #-- PPO
-    #save_path = pkg_path + "/models/empty/ppo/"
-    #log_path = pkg_path + "/logs/empty/ppo/"
-    #model = PPO(env, save_path, log_path, config_file_pkg="kobuki_maze_rl", config_filename="ppo.yaml")
+    save_path = pkg_path + "/models/maze/ppo/"
+    log_path = pkg_path + "/logs/maze/ppo/"
+    model = PPO(env, save_path, log_path, config_file_pkg="kobuki_maze_rl", config_filename="ppo.yaml")
     
     #-- DDPG
-    save_path = pkg_path + "/models/empty/ddpg/"
-    log_path = pkg_path + "/logs/empty/ddpg/"
-    model = DDPG(env, save_path, log_path, config_file_pkg="kobuki_maze_rl", config_filename="ddpg.yaml")
+    #save_path = pkg_path + "/models/empty/ddpg/"
+    #log_path = pkg_path + "/logs/empty/ddpg/"
+    #model = DDPG(env, save_path, log_path, config_file_pkg="kobuki_maze_rl", config_filename="ddpg.yaml")
     
     model.train()
     model.save_model()
